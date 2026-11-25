@@ -1,0 +1,2 @@
+include src/sql_eval_analytics/schema.sql
+recursive-include src/sql_eval_analytics/queries *.sql

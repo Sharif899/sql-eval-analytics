@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sql-eval-analytics"
+version = "0.1.0"
+description = "SQL analytics for AI evaluation operations: annotator agreement, review turnaround, quality rates and score calibration over annotation and model-evaluation data. PostgreSQL-first, runnable locally on SQLite."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "Sherif Olabode" }]
+keywords = ["sql", "postgresql", "sqlite", "llm-evaluation", "annotation-qa", "analytics"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Database",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+# No runtime dependencies: the SQL does the analysis, Python only loads
+# data, runs the queries and presents the report. sqlite3, csv, json and
+# argparse are all in the standard library.
+dependencies = []
+
+[project.optional-dependencies]
+postgres = ["psycopg[binary]>=3.1"]
+
+[project.scripts]
+sqleval = "sql_eval_analytics.cli:main"
+
+[project.urls]
+Repository = "https://github.com/Sharif899/sql-eval-analytics"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+sql_eval_analytics = [
+    "schema.sql",
+    "queries/*.sql",
+    "queries/postgres_only/*.sql",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
